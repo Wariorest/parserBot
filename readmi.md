@@ -4,7 +4,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-#Python parser telegram bot
+# Python parser telegram bot
 
 simple program
 
