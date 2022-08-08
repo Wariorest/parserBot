@@ -1,24 +1,32 @@
+import string
 import time
 from tokenize import Number
 from turtle import update
 import requests
 from bs4 import BeautifulSoup as BS
 
-def getVotesNumber(requestURL, htmlSelectClass = "", elSelectClass = ""):
-    r = requests.get(requestURL)
-    html = BS(r.content, 'html.parser')
-    for el in html.select(htmlSelectClass):
-        votes = el.select(elSelectClass)
-    return votes
+def getPetitionsPage(requestURL):
+    petitionPage = requests.get(requestURL)
+    
+    html = BS(petitionPage.content, 'html.parser')
+    
+    pName = html.select(".pet_number + h1").pop().text
+    pStatus = html.select(".petition_votes_status").pop().text
+    pVotes = html.select(".petition_votes_txt > span").pop().text
+    pLink = str(requestURL)
+    messege = "Name: " + pName + "\n" + pStatus + "\n votes: " + pVotes + "\n link: " + pLink
+        
+    return messege
 
 
-def processData(requestURL, htmlSelectClass = "", elSelectClass = ""):
-    votesNumber = getVotesNumber(requestURL, htmlSelectClass, elSelectClass)
-    return(votesNumber.pop().text)
 
 
-def votesPerHour(fVotesPoint, sVotesPoint):
-    votesPerHour = fVotesPoint - sVotesPoint
-    return votesPerHour
+
+def processPetitionArr(petitinoArr = []):
+    petitionsData =[]
+    for petitionLink in petitinoArr:
+        petitionPage = getPetitionsPage(petitionLink)
+        petitionsData.append(petitionPage)
+    return petitionsData
 
 

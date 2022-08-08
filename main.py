@@ -11,29 +11,28 @@ import VotesParser
 
 
 def votes(update: Update, context: CallbackContext):
-    votesStr = VotesParser.processData("https://petition.president.gov.ua/petition/146960",
-    ".petition_votes_txt",
-    ".petition_votes_txt > span"
-    )
-    mens = int(votesStr)
-    votesStr = VotesParser.processData("https://petition.president.gov.ua/petition/140908",
-    ".petition_votes_txt",
-    ".petition_votes_txt > span"
-    )
-    students = int(votesStr)
-    massage = "votes now: \n" + "age 18 - 60: " + str(mens) + "\nstudents: " + str(students)
-    update.message.reply_text(massage)
+    links = [
+        "https://petition.president.gov.ua/petition/146960",
+        "https://petition.president.gov.ua/petition/140908",
+        "https://petition.president.gov.ua/petition/155356",
+        "https://petition.president.gov.ua/petition/156774",
+        "https://petition.president.gov.ua/petition/151810",
+        "https://petition.president.gov.ua/petition/151938"
 
-def pagePetitionStat(update: Update, context: CallbackContext):
-    votesStr = VotesParser.processData("https://petition.president.gov.ua/?status=active&sort=votes&order=desc",
-    ".pet_title",
-    ".pet_link"
-    )
-    print(Type(votesStr))
-  
-    #students = int(votesStr)
-    #massage = "votes now: \n" + "age 18 - 60: " + str(mens) + "\nstudents: " + str(students)
-    #update.message.reply_text(massage)
+    ]
+    messege = ""
+    petitionsData =  VotesParser.processPetitionArr(links)
+    for dataEl in petitionsData:
+        messege += dataEl + "\n"
+        messege += "--------------------------------------------------------------------"
+        messege += "\n"
+    
+    #print(messege)
+    
+    
+    update.message.reply_text(messege)
+
+
     
 
 
@@ -44,6 +43,6 @@ updater = Updater("5367058482:AAHB6YoooV46zM753Ng9UVJG3EyJpdTVT90",
 
 
 updater.dispatcher.add_handler(CommandHandler('votes', votes))
-updater.dispatcher.add_handler(CommandHandler('stat', pagePetitionStat))
+
 
 updater.start_polling()
