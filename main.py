@@ -17,7 +17,8 @@ def votes(update: Update, context: CallbackContext):
         "https://petition.president.gov.ua/petition/155356",
         "https://petition.president.gov.ua/petition/156774",
         "https://petition.president.gov.ua/petition/151810",
-        "https://petition.president.gov.ua/petition/151938"
+        "https://petition.president.gov.ua/petition/151938",
+        "https://petition.president.gov.ua/petition/158664"
 
     ]
     messege = ""
